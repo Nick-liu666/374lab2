@@ -1,10 +1,10 @@
 public class DoubleListElement {
-	public ListElement next;
-	public ListElement previous;
+	public DoubleListElement next;
+	public DoubleListElement previous;
 	private int data;
 	
 	
-	public ListElement()
+	public DoubleListElement()
 	{
 		this.next = null;
 		this.previous =null;
@@ -23,50 +23,61 @@ public class DoubleListElement {
 		return this.data;
 	}
 	
-	public void addElement(ListElement addElement)
+	public void addElement(DoubleListElement addElement)
 	{
 		this.next = addElement;
 		addElement.previous = this;
 	}
-	public ListElement getElement(int index)
+	public DoubleListElement getElement(int index)
 	{
 		assert(index >=0);
-		ListElement result = this;
+		DoubleListElement result = this;
 		for(int i = 0; i < index; i++){
 			result = result.next;
 		}
 		return result;
 	}
-	public ListElement deleteElement(int index)
+	public DoubleListElement deleteElement(int index)
 	{
 		assert(index >=0);
-		if(index == 0 && this.next != null){
-			this.previous.next = this.next;
-			this.next.previous = this.previous;
+		if(index == 0){
+			if(this.next == null){
+				this.data = 0;
+			}
+			else{
+				this.data = this.next.data;
+				this.next.next.previous = this;
+				this.next = this.next.next;
+			}
 			return this;
 		}
-		ListElement deleteElement = this;
+		DoubleListElement deleteElement = this;
 		for(int i = 0; i < index; i++){
 			deleteElement = deleteElement.next;
 		}
-		deleteElement.previous.next = deleteElement.next;
 		deleteElement.next.previous = deleteElement.previous;
+		deleteElement.previous.next = deleteElement.next;
 		return this;
 	}
 	public void printLinkedListTail()
 	{
-		ListElement result = this;
-		while(result.next != null){
-			result = result.next;
+		printLinkedListTail_helper(this);
+	}
+	public void printLinkedListTail_helper(DoubleListElement element){
+		if(element.next != null){
+			printLinkedListTail_helper(element.next);
+			System.out.println(element.data + " ");
 		}
-		System.out.println(result.data);
+		else{
+			System.out.println(element.data + " ");
+		}
 	}
 	public void printLinkedListHead()
 	{
-		ListElement result = this;
-		while(result.previous != null){
-			result = result.previous;
+		DoubleListElement result = this;
+		while(result != null){
+			System.out.println(result.getData() + " ");
+			result = result.next;
 		}
-		System.out.println(result.data);
 	}	
 }
