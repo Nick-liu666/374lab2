@@ -57,14 +57,23 @@ public class ListElement {
 	}
 	public void printLinkedListTail()
 	{
-		ListElement result = this;
-		while(result.next != null){
-			result = result.next;
+		printLinkedListTail_helper(this);
+	}
+	public void printLinkedListTail_helper(ListElement element){
+		if(element.next != null){
+			printLinkedListTail_helper(element.next);
+			System.out.println(element.data + " ");
 		}
-		System.out.println(result.data);
+		else{
+			System.out.println(element.data + " ");
+		}
 	}
 	public void printLinkedListHead()
 	{
-		System.out.println(this.data);
+		ListElement element = this;
+		while(element != null){
+			System.out.println(element.getData() + " ");
+			element = element.next;
+		}
 	}	
 }
